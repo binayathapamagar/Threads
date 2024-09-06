@@ -8,14 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    
-    // MARK: Properties
-    
     @State private var email = ""
     @State private var password = ""
-    
-    // MARK: Body
-    
+        
     var body: some View {
         NavigationStack {
             VStack {
@@ -30,22 +25,12 @@ struct LoginView: View {
                 
                 VStack {
                     TextField("Enter your email", text: $email)
-                        .font(.subheadline)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 10)
-                        )
-                        .padding(.horizontal, 24)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .modifier(TextFieldModifier())
                     
                     SecureField("Enter your password", text: $password)
-                        .font(.subheadline)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 10)
-                        )
-                        .padding(.horizontal, 24)
+                        .modifier(TextFieldModifier())
                 }//VStack
                 
                 NavigationLink {
@@ -55,22 +40,14 @@ struct LoginView: View {
                         .font(.footnote)
                         .fontWeight(.semibold)
                         .foregroundStyle(.black)
-                        .padding(.vertical)
+                        .padding(.top)
                         .padding(.trailing, 28)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }//NavigationLink
 
                 Button(action: {}, label: {
                     Text("Login")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, maxHeight: 40)
-                        .background(.black)
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 8)
-                        )
-                        .padding(.horizontal)
+                        .modifier(AuthenticationButtonModifier())
                 })//Button
                 
                 Spacer()
@@ -78,7 +55,7 @@ struct LoginView: View {
                 Divider()
                 
                 NavigationLink {
-                    Text("Registration View")
+                    RegistrationView()
                 } label: {
                     HStack(spacing: 3) {
                         Text("Don't have an account?")
@@ -93,6 +70,7 @@ struct LoginView: View {
 
                 
             }//VStack
+            
         }//NavigationStack
     }
 }
