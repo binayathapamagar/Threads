@@ -8,6 +8,19 @@ This is a learning project that replicates the core functionality of the Threads
   - **LoginView**: Users can log in using their email and password.
   - **RegistrationView**: New users can sign up with email, password, and other required details.
 
+- **Root Tab Bar**
+  - A tab bar with five primary views:
+    - **FeedView**: Displays user posts and threads.
+    - **ExploreView**: Explore new content and search for threads.
+    - **CreateThreadsView**: Allows users to create new threads.
+    - **ActivityView**: Shows user notifications and interactions.
+    - **ProfileView**: Displays user profile and settings.
+  - **Dynamic System Icon Variants**: The system icons in the tab bar dynamically adjust based on the selected tab using:
+    ```swift
+    .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
+    ```
+    This changes the appearance of icons (e.g., filled when selected).
+
 - **Architecture**
   - The project is structured into several folders to maintain organization and separation of concerns:
     - **App**: Contains app configuration files and the main entry point.
@@ -16,7 +29,7 @@ This is a learning project that replicates the core functionality of the Threads
     - **Model**: Data models and objects.
     - **Services**: Services for interacting with Firebase (e.g., authentication, database operations).
     - **Utils**: Utility functions and helpers.
-  
+
 - **Custom View Modifiers**
   - Custom SwiftUI view modifiers have been implemented to promote reusable and maintainable code.
 
@@ -53,7 +66,7 @@ ThreadsClone/
 
 ## Future Improvements
 
-- Implement the main Threads feed.
+- Implement the main Threads feed, Explore and Activity views. 
 - Add profile creation and editing.
 - Add support for creating, liking, and sharing threads.
 - Integrate Firestore for storing user posts and data.
