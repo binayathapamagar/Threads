@@ -16,10 +16,30 @@ This is a learning project that replicates the core functionality of the Threads
     - **ActivityView**: Shows user notifications and interactions.
     - **ProfileView**: Displays user profile and settings.
   - **Dynamic System Icon Variants**: The system icons in the tab bar dynamically adjust based on the selected tab using:
+    
     ```swift
     .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
     ```
+
     This changes the appearance of icons (e.g., filled when selected).
+
+- **FeedView**
+  - Shows all threads using a `ScrollView`, `LazyVStack`, and a subview called `ThreadCellView`.
+  - **Styling**: The `FeedView` has been designed to include a smooth scrolling experience with a well-organized list of threads.
+
+- **ExploreView**
+  - Provides an interface to explore new content and search for threads.
+  - **Styling**: The `ExploreView` features a clean and intuitive layout to facilitate easy navigation and content discovery.
+
+- **ProfileView**
+  - Displays user profile information and settings.
+  - **Matched Geometry Effect**: Implemented to animate transitions between different profile sections.
+    
+    ```swift
+    .matchedGeometryEffect(id: "sharedID", in: animation)
+    ```
+
+    This technique is used to create smooth, visually appealing animations for UI transitions.
 
 - **Architecture**
   - The project is structured into several folders to maintain organization and separation of concerns:
@@ -66,7 +86,7 @@ ThreadsClone/
 
 ## Future Improvements
 
-- Implement the main Threads feed, Explore and Activity views. 
+- Implement the main Threads feed, Explore, and Activity views.
 - Add profile creation and editing.
 - Add support for creating, liking, and sharing threads.
 - Integrate Firestore for storing user posts and data.
