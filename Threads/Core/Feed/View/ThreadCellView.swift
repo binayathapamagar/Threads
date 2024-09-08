@@ -17,7 +17,7 @@ struct ThreadCellView: View {
                     HStack {
                         
                         //Username
-                        Text("MinjiK")
+                        Text("LeoMessi")
                             .font(.footnote)
                         .fontWeight(.semibold)
 
@@ -34,7 +34,7 @@ struct ThreadCellView: View {
                     }//HStack
                     
                     //Thread content
-                    Text("Hey guys, Minji here from the KPOP group NewJeans")
+                    Text("Hey guys, Leo from Argentina here.")
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                     
@@ -53,7 +53,7 @@ struct ThreadCellView: View {
                             Image(systemName: "paperplane")
                         })
                     }//HStack
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.secondary)
                     .padding(.vertical, 8)
                     
                 }//VStack
@@ -62,7 +62,7 @@ struct ThreadCellView: View {
             
             Divider()
         }//VStack
-        .padding()
+        .padding(.top)
     }
 }
 
