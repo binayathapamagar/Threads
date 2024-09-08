@@ -11,11 +11,7 @@ struct ThreadCellView: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                Image(.minji)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
+                CircularProfileView()
                 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
@@ -24,13 +20,12 @@ struct ThreadCellView: View {
                         Text("MinjiK")
                             .font(.footnote)
                         .fontWeight(.semibold)
-                        
-                        Spacer()
-                        
-                        //Time and button
+
                         Text("10m")
                             .font(.caption)
-                            .foregroundStyle(Color(.systemGray3))
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        Spacer()
                         
                         Button(action: {}, label: {
                             Image(systemName: "ellipsis")
@@ -62,6 +57,7 @@ struct ThreadCellView: View {
                     .padding(.vertical, 8)
                     
                 }//VStack
+
             }//HStack
             
             Divider()

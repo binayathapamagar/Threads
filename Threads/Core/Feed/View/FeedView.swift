@@ -19,7 +19,7 @@ struct FeedView: View {
             }//ScrollView
             .refreshable {
                 print("Pull to refresh")
-            }
+            }//refreshable
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack {
@@ -28,7 +28,7 @@ struct FeedView: View {
                             .scaledToFit()
                             .frame(height: 40)
                     }
-                }
+                }//ToolbarItem
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -37,8 +37,8 @@ struct FeedView: View {
                         Image(systemName: "arrow.counterclockwise")
                             .foregroundStyle(.black)
                     }
-                }
-            }
+                }//ToolbarItem
+            }//toolbar
             .navigationBarTitleDisplayMode(.inline)
         }//NavigationStack
     }
