@@ -94,6 +94,7 @@ struct ProfileView: View {
                 }//VStack
                 
             }//VStack
+            .padding(.top, 16)
         }//ScrollView
         .scrollIndicators(.hidden)
         .padding(.horizontal)
