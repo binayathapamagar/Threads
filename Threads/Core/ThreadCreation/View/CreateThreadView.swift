@@ -50,7 +50,7 @@ struct CreateThreadView: View {
                         dismiss()
                     }
                     .font(.subheadline)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.primary)
                 }//ToolbarItem
                 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -61,7 +61,7 @@ struct CreateThreadView: View {
                     .disabled(content.isEmpty)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.primary)
                 }//ToolbarItem
             }//toolbar
         }//NavigationStack

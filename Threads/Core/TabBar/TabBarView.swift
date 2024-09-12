@@ -18,21 +18,18 @@ struct TabBarView: View {
                     Image(systemName: selectedTab == 0 ? "house.fill" : "house")
                         .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
                 }
-                .onAppear{ selectedTab = 0 }
                 .tag(0)
             
             ExploreView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                 }
-                .onAppear{ selectedTab = 1 }
                 .tag(1)
             
             Text("")
                 .tabItem {
                     Image(systemName: "plus")
                 }
-                .onAppear{ selectedTab = 2 }
                 .tag(2)
             
             ActivityView()
@@ -40,7 +37,6 @@ struct TabBarView: View {
                     Image(systemName: selectedTab == 3 ? "heart.fill" : "heart")
                         .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
                 }
-                .onAppear{ selectedTab = 3 }
                 .tag(3)
             
             ProfileView()
@@ -48,21 +44,36 @@ struct TabBarView: View {
                     Image(systemName: selectedTab == 4 ? "person.fill" : "person")
                         .environment(\.symbolVariants, selectedTab == 4 ? .fill : .none)
                 }
-                .onAppear{ selectedTab = 4 }
                 .tag(4)
         }
         .onChange(of: selectedTab, { oldValue, newValue in
-            showCreateThreadView = selectedTab == 2
+            if newValue == 2 {
+                triggerDoubleHapticFeedback()
+                showCreateThreadView = true
+                selectedTab = oldValue
+            }
         })
-        .sheet(isPresented: $showCreateThreadView, onDismiss: {
-            selectedTab = 0
-        }, content: {
+        .sheet(isPresented: $showCreateThreadView, content: {
             CreateThreadView()
         })
-        .tint(.black)
+        .tint(.primary)
     }
 }
 
 #Preview {
     TabBarView()
+}
+
+extension TabBarView {
+    
+    private func triggerDoubleHapticFeedback() {
+        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+        impactMed.impactOccurred()
+        
+        // Dispatch another haptic feedback after a slight delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            impactMed.impactOccurred()
+        }
+    }
+    
 }

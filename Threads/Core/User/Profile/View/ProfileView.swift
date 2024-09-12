@@ -47,9 +47,9 @@ struct ProfileView: View {
                     Text("Follow")
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color(.systemBackground))
                         .frame(maxWidth: .infinity, minHeight: 32)
-                        .background(.black)
+                        .background(.primary)
                         .clipShape(
                             RoundedRectangle(cornerRadius: 8)
                         )
@@ -68,7 +68,7 @@ struct ProfileView: View {
                                 
                                 if selectedFilter == filter {
                                     Rectangle()
-                                        .foregroundStyle(.black)
+                                        .foregroundStyle(.primary)
                                         .frame(maxWidth: .infinity, maxHeight: 1)
                                         .matchedGeometryEffect(id: "sharedID", in: animation)
                                 } else {
