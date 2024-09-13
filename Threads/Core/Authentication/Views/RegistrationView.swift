@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
+    @StateObject private var viewModel = RegistrationViewModel()
     @State private var fullName = ""
     @State private var username = ""
     @State private var email = ""
@@ -43,7 +44,9 @@ struct RegistrationView: View {
                 
             }//VStack
             
-            Button(action: {}, label: {
+            Button(action: {
+                Task { try await viewModel.createUser() }
+            }, label: {
                 Text("Register")
                     .modifier(AuthenticationButtonModifier())
             })//Button
@@ -61,7 +64,7 @@ struct RegistrationView: View {
                     Text("Sign In")
                         .fontWeight(.bold)
                 }//HStack
-                .foregroundStyle(.black)
+                .foregroundStyle(.appPrimary)
                 .font(.footnote)
                 .padding(.vertical, 16)
             }//NavigationLink

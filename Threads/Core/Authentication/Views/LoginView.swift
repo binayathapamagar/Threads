@@ -39,7 +39,7 @@ struct LoginView: View {
                     Text("Forgot Password?")
                         .font(.footnote)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.appPrimary)
                         .padding(.top)
                         .padding(.trailing, 28)
                         .frame(maxWidth: .infinity, alignment: .trailing)
@@ -64,7 +64,7 @@ struct LoginView: View {
                         Text("Sign Up")
                             .fontWeight(.bold)
                     }//HStack
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.appPrimary)
                     .font(.footnote)
                     .padding(.vertical, 16)
                 }//NavigationLink

@@ -56,7 +56,7 @@ struct TabBarView: View {
         .sheet(isPresented: $showCreateThreadView, content: {
             CreateThreadView()
         })
-        .tint(.primary)
+        .tint(.appPrimary)
     }
 }
 

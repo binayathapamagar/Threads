@@ -75,13 +75,13 @@ struct EditProfileView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {}
                         .font(.subheadline)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.appPrimary)
                 }//ToolbarItem
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {}
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.appPrimary)
                 }//ToolbarItem
             }//Toolbar
         }//NavigationStack

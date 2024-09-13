@@ -49,7 +49,7 @@ struct ProfileView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(Color(.systemBackground))
                         .frame(maxWidth: .infinity, minHeight: 32)
-                        .background(.primary)
+                        .background(.appPrimary)
                         .clipShape(
                             RoundedRectangle(cornerRadius: 8)
                         )
@@ -68,7 +68,7 @@ struct ProfileView: View {
                                 
                                 if selectedFilter == filter {
                                     Rectangle()
-                                        .foregroundStyle(.primary)
+                                        .foregroundStyle(.appPrimary)
                                         .frame(maxWidth: .infinity, maxHeight: 1)
                                         .matchedGeometryEffect(id: "sharedID", in: animation)
                                 } else {

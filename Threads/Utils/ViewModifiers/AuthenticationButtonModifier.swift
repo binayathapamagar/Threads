@@ -13,9 +13,9 @@ struct AuthenticationButtonModifier: ViewModifier {
         content
             .font(.subheadline)
             .fontWeight(.semibold)
-            .foregroundStyle(.white)
+            .foregroundStyle(.appSecondary)
             .frame(maxWidth: .infinity, maxHeight: 40)
-            .background(.black)
+            .background(.appPrimary)
             .clipShape(
                 RoundedRectangle(cornerRadius: 8)
             )
