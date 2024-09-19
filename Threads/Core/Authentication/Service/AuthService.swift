@@ -25,6 +25,7 @@ class AuthService {
             print(#function, "DEBUG: Successfully create a new user: \(result.user.uid)")
         } catch {
             print(#function, "DEBUG: Failed to create a new user with error: \(error.localizedDescription)")
+            throw error
         }
     }
     
