@@ -80,11 +80,7 @@ struct RegistrationView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    ProgressView()
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
+                    AuthProgressView()
                 }
             }
         }//ZStack

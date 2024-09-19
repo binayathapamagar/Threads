@@ -13,7 +13,14 @@ class AuthService {
     
     @MainActor
     func login(withEmail email: String, password: String) async throws {
-        do {} catch {}
+        do {
+            print(#function, "DEBUG: login() called...")
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            print(#function, "DEBUG: Successfully login: \(result.user.uid)")
+        } catch {
+            print(#function, "DEBUG: Failed to login with error: \(error.localizedDescription)")
+            throw error
+        }
     }
     
     //Any time we have a function that has an asynce throws, we have to wrap it in a do catch block.
