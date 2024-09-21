@@ -29,6 +29,7 @@ struct RegistrationView: View {
                         .modifier(TextFieldModifier())
                     
                     TextField("Enter your username", text: $viewModel.username)
+                        .textInputAutocapitalization(.never)
                         .modifier(TextFieldModifier())
                     
                     TextField("Enter your email", text: $viewModel.email)

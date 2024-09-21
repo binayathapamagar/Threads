@@ -38,6 +38,7 @@ class RegistrationViewModel: ObservableObject {
                 username: username
             )
         } catch {
+            print(#function, "ERROR: Error registering the user with: \(error.localizedDescription)")
             errorMessage = error.localizedDescription
             showAlert = true
         }

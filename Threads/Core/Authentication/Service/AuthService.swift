@@ -6,9 +6,11 @@
 //
 
 import FirebaseAuth
+import FirebaseFirestore
 
 class AuthService {
     
+    private let USERS_COLLECTION_NAME = "users"
     @Published var userSession: FirebaseAuth.User?
     
     static let shared = AuthService()
@@ -38,6 +40,8 @@ class AuthService {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             print(#function, "DEBUG: Successfully create a new user: \(result.user.uid)")
+            
+            try await uploadUserData(id: result.user.uid, email: email, fullname: fullname, username: username)
         } catch {
             print(#function, "DEBUG: Failed to create a new user with error: \(error.localizedDescription)")
             throw error
@@ -48,6 +52,28 @@ class AuthService {
         print(#function, "DEBUG: signOut() called...")
         try? Auth.auth().signOut() //Signs the user on the Firebase backend
         userSession = nil //Signs the user out locally and updates the routing.
+    }
+    
+    // MARK: Database methods
+    
+    @MainActor
+    private func uploadUserData(
+        id: String,
+        email: String,
+        fullname: String,
+        username: String
+    ) async throws {
+        print(#function, "DEBUG: uploadUserData() called...")
+        let user = User(
+            id: id,
+            username: username,
+            fullName: fullname,
+            email: email,
+            joinedDate: Date.getJoinedAtDateString()
+        )
+        guard let userData = try? Firestore.Encoder().encode(user) else { return }
+        try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(id).setData(userData)
+        print(#function, "DEBUG: Successfully uploaded the user \(id) to the users collection.")
     }
     
 }

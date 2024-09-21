@@ -33,6 +33,7 @@ class LoginViewModel: ObservableObject {
                 password: password
             )
         } catch {
+            print(#function, "ERROR: Error logging the user in with: \(error.localizedDescription)")
             errorMessage = error.localizedDescription
             showAlert = true
         }

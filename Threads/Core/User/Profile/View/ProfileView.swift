@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @StateObject private var viewModel = ProfileViewModel()
     @State private var selectedFilter: ProfileThreadFilter = .threads
     @Namespace var animation
     
@@ -110,6 +111,7 @@ struct ProfileView: View {
             }
             .tint(.primary)
         }//NavigationStack
+        
     }
 }
 
