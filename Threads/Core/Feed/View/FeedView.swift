@@ -36,7 +36,7 @@ struct FeedView: View {
                         print("Right button tapped")
                     }) {
                         Image(systemName: "arrow.counterclockwise")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.appPrimary)
                     }
                 }//ToolbarItem
             }//toolbar
