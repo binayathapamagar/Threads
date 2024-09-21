@@ -13,6 +13,10 @@ struct ProfileView: View {
     @State private var selectedFilter: ProfileThreadFilter = .threads
     @Namespace var animation
     
+    private var currentUser: User? {
+        viewModel.currentUser
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -23,17 +27,19 @@ struct ProfileView: View {
                         VStack(alignment: .leading, spacing: 12) {
                             //Name and username
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Leo Andres Messi")
+                                Text(currentUser?.fullName ?? "Full Name")
                                     .font(.title2)
                                     .fontWeight(.semibold)
                                 
-                                Text("LeoMessi")
+                                Text("@\(currentUser?.username ?? "Username")")
                                     .font(.subheadline)
                             }
                             
                             //Bio and followers count
-                            Text("Professional player of Inter Miami FC & Argentina")
-                                .font(.footnote)
+                            if let bio = currentUser?.bio {
+                                Text(bio)
+                                    .font(.footnote)
+                            }
                             
                             Text("981m followers")
                                 .foregroundStyle(.gray)

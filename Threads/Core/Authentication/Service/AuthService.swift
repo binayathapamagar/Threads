@@ -10,6 +10,8 @@ import FirebaseFirestore
 
 class AuthService {
     
+    // MARK: FireAuth methods
+    
     private let USERS_COLLECTION_NAME = "users"
     @Published var userSession: FirebaseAuth.User?
     
@@ -26,6 +28,8 @@ class AuthService {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
             print(#function, "DEBUG: Successfully login: \(result.user.uid)")
+
+            try await UserService.shared.fetchCurrentUser()//Getting the latest user.
         } catch {
             print(#function, "DEBUG: Failed to login with error: \(error.localizedDescription)")
             throw error
@@ -51,10 +55,11 @@ class AuthService {
     func signOut() {
         print(#function, "DEBUG: signOut() called...")
         try? Auth.auth().signOut() //Signs the user on the Firebase backend
-        userSession = nil //Signs the user out locally and updates the routing.
+        userSession = nil //Signs the user out locally and updates the routing
+        UserService.shared.resetCurrentUser()//Sets the current user to nil
     }
     
-    // MARK: Database methods
+    // MARK: Firestore collection methods
     
     @MainActor
     private func uploadUserData(
@@ -74,6 +79,8 @@ class AuthService {
         guard let userData = try? Firestore.Encoder().encode(user) else { return }
         try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(id).setData(userData)
         print(#function, "DEBUG: Successfully uploaded the user \(id) to the users collection.")
+        
+        UserService.shared.currentUser = user
     }
     
 }
