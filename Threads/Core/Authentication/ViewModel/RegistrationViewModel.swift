@@ -44,5 +44,4 @@ class RegistrationViewModel: ObservableObject {
         }
     }
     
-    
 }

@@ -9,10 +9,18 @@ import SwiftUI
 
 struct RegistrationView: View {
     @StateObject private var viewModel = RegistrationViewModel()
+    @State private var isPasswordVisible: Bool = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
+            
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    self.hideKeyboard()
+                }
+            
             VStack {
                 
                 Spacer()
@@ -37,17 +45,35 @@ struct RegistrationView: View {
                         .textInputAutocapitalization(.never)
                         .modifier(TextFieldModifier())
                     
-                    SecureField("Enter your password", text: $viewModel.password)
-                        .modifier(TextFieldModifier())
+                    ZStack(alignment: .trailing) {
+                        if isPasswordVisible {
+                            TextField("Enter your password", text: $viewModel.password)
+                                .modifier(TextFieldModifier())
+                        } else {
+                            SecureField("Enter your password", text: $viewModel.password)
+                                .modifier(TextFieldModifier())
+                        }
+                        Button(action: {
+                            isPasswordVisible.toggle() // Toggle visibility
+                        }) {
+                            Image(
+                                systemName: isPasswordVisible ? "eye" : "eye.slash"
+                            )
+                            .foregroundColor(.appPrimary.opacity(0.5))
+                            .padding(.horizontal, 36) //Textfields have a 24 horizontal padding.
+                        }
+                    }
+                    .padding(.top, 0.5)
                     
                 }//VStack
                 
-                Button(action: {
+                Button {
+                    self.hideKeyboard()
                     Task { try await viewModel.createUser() }
-                }, label: {
+                } label: {
                     Text("Register")
                         .modifier(AuthenticationButtonModifier())
-                })//Button
+                }//Button
                 .opacity(viewModel.fieldsAreEmpty ? 0.7 : 1)
                 .disabled(viewModel.fieldsAreEmpty)
                 
@@ -86,8 +112,15 @@ struct RegistrationView: View {
             }
         }//ZStack
     }
+    
 }
 
 #Preview {
     RegistrationView()
+}
+
+extension UIApplication {
+    func dismissKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
