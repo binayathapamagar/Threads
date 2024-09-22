@@ -9,10 +9,17 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
+    @State private var isPasswordVisible: Bool = false
     
     var body: some View {
         NavigationStack {
             ZStack {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        self.hideKeyboard()
+                    }
+                
                 VStack {
                     
                     Spacer()
@@ -29,8 +36,26 @@ struct LoginView: View {
                             .textInputAutocapitalization(.never)
                             .modifier(TextFieldModifier())
                         
-                        SecureField("Enter your password", text: $viewModel.password)
-                            .modifier(TextFieldModifier())
+                        ZStack(alignment: .trailing) {
+                            if isPasswordVisible {
+                                TextField("Enter your password", text: $viewModel.password)
+                                    .modifier(TextFieldModifier())
+                            } else {
+                                SecureField("Enter your password", text: $viewModel.password)
+                                    .modifier(TextFieldModifier())
+                            }
+                            Button(action: {
+                                isPasswordVisible.toggle() // Toggle visibility
+                            }) {
+                                Image(
+                                    systemName: isPasswordVisible ? "eye" : "eye.slash"
+                                )
+                                .foregroundColor(.appPrimary.opacity(0.5))
+                                .padding(.horizontal, 36) //Textfields have a 24 horizontal padding.
+                            }
+                        }//ZStack
+                        .padding(.top, 0.5)
+
                     }//VStack
                     
                     NavigationLink {
@@ -46,6 +71,7 @@ struct LoginView: View {
                     }//NavigationLink
                     
                     Button(action: {
+                        self.hideKeyboard()
                         Task { try await viewModel.login() }
                     }, label: {
                         Text("Login")
