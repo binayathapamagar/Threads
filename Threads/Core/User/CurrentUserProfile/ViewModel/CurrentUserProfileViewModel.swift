@@ -1,14 +1,14 @@
 //
-//  ProfileViewModel.swift
+//  CurrentUserProfileViewModel.swift
 //  Threads
 //
-//  Created by BINAYA THAPA MAGAR on 2024-09-20.
+//  Created by BINAYA THAPA MAGAR on 2024-10-07.
 //
 
 import Foundation
 import Combine
 
-class ProfileViewModel: ObservableObject {
+class CurrentUserProfileViewModel: ObservableObject {
     @Published var currentUser: User?
     private var cancellables = Set<AnyCancellable>()
     
@@ -19,7 +19,6 @@ class ProfileViewModel: ObservableObject {
     private func setupSubscribers() {
         UserService.shared.$currentUser.sink { [weak self] user in
             self?.currentUser = user
-            print(#function, "DEBUG: User object in view model using combine is \(user)")
         }.store(in: &cancellables)
     }
     

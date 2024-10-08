@@ -10,23 +10,27 @@ import FirebaseFirestore
 
 class AuthService {
     
-    // MARK: FireAuth methods
+    // MARK: Properties
     
     private let USERS_COLLECTION_NAME = "users"
     @Published var userSession: FirebaseAuth.User?
     
     static let shared = AuthService()
     
+    // MARK: Initializers
+    
     init() {
         self.userSession = Auth.auth().currentUser //Will be nil if the user is not logged in.
     }
+    
+    // MARK: FireAuth methods
     
     @MainActor
     func login(withEmail email: String, password: String) async throws {
         do {
             print(#function, "DEBUG: login() called...")
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            self.userSession = result.user
+            self.userSession = result.user 
             print(#function, "DEBUG: Successfully login: \(result.user.uid)")
 
             try await UserService.shared.fetchCurrentUser()//Getting the latest user.
