@@ -13,7 +13,7 @@ struct EditProfileView: View {
     @State private var link = ""
     @State private var isPrivate = false
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var viewModel: CurrentUserProfileViewModel
+    @StateObject var viewModel = EditProfileViewModel()
     
     var body: some View {
         NavigationStack {
@@ -45,16 +45,6 @@ struct EditProfileView: View {
                             }
                         }
                     }//HStack
-                    
-                    Divider()
-                    
-                    //Username
-                    VStack(alignment: .leading) {
-                        Text("Username")
-                            .fontWeight(.semibold)
-                        
-                        TextField("Enter your username...", text: $link)
-                    }//VStack
                     
                     Divider()
                     
@@ -99,14 +89,19 @@ struct EditProfileView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                        .font(.subheadline)
-                        .foregroundStyle(.appPrimary)
+                    .font(.subheadline)
+                    .foregroundStyle(.appPrimary)
                 }//ToolbarItem
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {}
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.appPrimary)
+                    Button("Done") {
+                        Task {
+                            try await viewModel.updateUserData()
+                            dismiss()
+                        }
+                    }
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.appPrimary)
                 }//ToolbarItem
             }//Toolbar
         }//NavigationStack
