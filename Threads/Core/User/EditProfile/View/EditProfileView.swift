@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct EditProfileView: View {
     @State private var bio = ""
     @State private var link = ""
     @State private var isPrivate = false
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: CurrentUserProfileViewModel
     
     var body: some View {
         NavigationStack {
@@ -30,8 +33,28 @@ struct EditProfileView: View {
                         
                         Spacer()
                         
-                        CircularProfileView()
+                        PhotosPicker(selection: $viewModel.selectedItem) {
+                            if let image = viewModel.profileImage {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                            } else {
+                                CircularProfileView()
+                            }
+                        }
                     }//HStack
+                    
+                    Divider()
+                    
+                    //Username
+                    VStack(alignment: .leading) {
+                        Text("Username")
+                            .fontWeight(.semibold)
+                        
+                        TextField("Enter your username...", text: $link)
+                    }//VStack
                     
                     Divider()
                     
@@ -60,11 +83,11 @@ struct EditProfileView: View {
                 }//VStack
                 .font(.footnote)
                 .padding()
-                .background(.white)
+                .background(.appSecondary)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
+                        .strokeBorder(Color(.systemGray4), lineWidth: 1)
                 )
                 .padding()
                 
@@ -73,7 +96,9 @@ struct EditProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {}
+                    Button("Cancel") {
+                        dismiss()
+                    }
                         .font(.subheadline)
                         .foregroundStyle(.appPrimary)
                 }//ToolbarItem
@@ -90,4 +115,5 @@ struct EditProfileView: View {
 
 #Preview {
     EditProfileView()
+        .environmentObject(CurrentUserProfileViewModel())
 }

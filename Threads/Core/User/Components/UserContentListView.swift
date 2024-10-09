@@ -15,33 +15,40 @@ struct UserContentListView: View {
         VStack {
             
             //Profile Thread Filter
-            HStack {
-                ForEach(ProfileThreadFilter.allCases) { filter in
-                    VStack {
-                        Text(filter.title)
-                            .font(.subheadline)
-                            .fontWeight(
-                                selectedFilter == filter ? .semibold : .regular
-                            )
-                        
-                        if selectedFilter == filter {
-                            Rectangle()
-                                .foregroundStyle(.appPrimary)
-                                .frame(maxWidth: .infinity, maxHeight: 1)
-                                .matchedGeometryEffect(id: "sharedID", in: animation)
-                        } else {
-                            Rectangle()
-                                .foregroundStyle(.clear)
-                                .frame(maxWidth: .infinity, maxHeight: 1)
+            ZStack(alignment: .bottom) {
+                Rectangle()
+                    .foregroundStyle(.dividerBG)
+                    .frame(maxWidth: .infinity, maxHeight: 0.4)
+                
+                HStack {
+                    ForEach(ProfileThreadFilter.allCases) { filter in
+                        VStack {
+                            Text(filter.title)
+                                .font(.subheadline)
+                                .fontWeight(
+                                    selectedFilter == filter ? .semibold : .regular
+                                )
+                            
+                            if selectedFilter == filter {
+                                Rectangle()
+                                    .foregroundStyle(.appPrimary)
+                                    .frame(maxWidth: .infinity, maxHeight: 1)
+                                    .matchedGeometryEffect(id: "sharedID", in: animation)
+                            } else {
+                                Rectangle()
+                                    .foregroundStyle(.clear)
+                                    .frame(maxWidth: .infinity, maxHeight: 1)
+                            }
+                        }//VStack
+                        .onTapGesture {
+                            withAnimation(.smooth) {
+                                selectedFilter = filter
+                            }
                         }
-                    }//VStack
-                    .onTapGesture {
-                        withAnimation(.spring) {
-                            selectedFilter = filter
-                        }
-                    }
-                }//ForEach
-            }//HStack
+                    }//ForEach
+                }//HStack
+                                
+            }//ZStack
             
             //Content List
             LazyVStack {
@@ -49,6 +56,7 @@ struct UserContentListView: View {
                     ThreadCellView()
                 }//ForEach
             }//LazyVStack
+            .padding(.horizontal)
         }//VStack
     }
 }

@@ -10,11 +10,12 @@ import SwiftUI
 struct CircularProfileView: View {
     
     var body: some View {
-        Image(.messi)
+        Image(systemName: "person.circle")
             .resizable()
             .scaledToFill()
             .frame(width: 40, height: 40)
             .clipShape(Circle())
+            .tint(.appPrimary)
     }
 }
 

@@ -18,6 +18,7 @@ struct ProfileView: View {
             //Header
             VStack(spacing: 20) {
                 ProfileHeaderView(user: user)
+                    .padding(.horizontal)
                 
                 Button(action: {}, label: {
                     Text("Follow")
@@ -29,6 +30,7 @@ struct ProfileView: View {
                         .clipShape(
                             RoundedRectangle(cornerRadius: 8)
                         )
+                        .padding(.horizontal)
                 })
                 
                 UserContentListView()
@@ -36,7 +38,6 @@ struct ProfileView: View {
             .padding(.top, 16)
         }//ScrollView
         .scrollIndicators(.hidden)
-        .padding(.horizontal)
         .tint(.appPrimary)
         .navigationBarTitleDisplayMode(.inline)
     }
