@@ -18,6 +18,12 @@ struct ContentView: View {
                 LoginView()
             }
         }//Group
+        .onAppear {
+            if viewModel.userSession != nil {
+                print(#function, "New usersession...")
+                let _ = UserService.shared
+            }
+        }
     }
 }
 
