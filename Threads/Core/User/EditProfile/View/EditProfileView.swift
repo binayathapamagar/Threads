@@ -56,6 +56,7 @@ struct EditProfileView: View {
                             .fontWeight(.semibold)
                         
                         TextField("Enter your username...", text: $viewModel.username, axis: .vertical)
+                            .textInputAutocapitalization(.never)
                     }//VStack
                     
                     Divider()
@@ -66,6 +67,7 @@ struct EditProfileView: View {
                             .fontWeight(.semibold)
                         
                         TextField("Enter your bio...", text: $viewModel.bio, axis: .vertical)
+                            .textInputAutocapitalization(.never)
                     }//VStack
                     
                     Divider()
@@ -76,6 +78,7 @@ struct EditProfileView: View {
                             .fontWeight(.semibold)
                         
                         TextField("Add link ...", text: $viewModel.link)
+                            .textInputAutocapitalization(.never)
                     }//VStack
                     
                     Divider()

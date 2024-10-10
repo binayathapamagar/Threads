@@ -44,12 +44,20 @@ class UserService {
     }
     
     @MainActor
-    func updateUserProfileImage(withImageUrl imageUrl: String) async throws {
+    func updateUserProfile(with data: [String: Any]) async throws {
         guard let currentUserUid = Auth.auth().currentUser?.uid else { return }
-        try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(currentUserUid).updateData([
-            "profileImageUrl": imageUrl
-        ])
-        self.currentUser?.profileImageUrl = imageUrl
+        
+        try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(currentUserUid).updateData(data)
+        
+        if let updatedUser = try await fetchUpdatedUser(with: currentUserUid) {
+            self.currentUser = updatedUser
+        }
     }
+
+    private func fetchUpdatedUser(with userId: String) async throws -> User? {
+        let snapshot = try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(userId).getDocument()
+        return try snapshot.data(as: User.self)
+    }
+
     
 }

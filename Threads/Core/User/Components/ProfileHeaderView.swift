@@ -24,9 +24,15 @@ struct ProfileHeaderView: View {
                         .font(.subheadline)
                 }
                 
-                //Bio and followers count
+                //Bio, link and followers count
                 if let bio = user?.bio{
                     Text(bio)
+                        .font(.footnote)
+                }
+                
+                if let link = user?.link {
+                    Text(link)
+                        .foregroundStyle(Color.link)
                         .font(.footnote)
                 }
                 

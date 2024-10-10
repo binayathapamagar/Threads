@@ -21,15 +21,14 @@ class EditProfileViewModel: ObservableObject {
     @Published var profileImage: Image?
     private var uiImage: UIImage?
     
+    // Error messages
+    @Published var errorMessage: String?
+    
     func loadUserData(user: User) {
         self.username = user.username
         self.bio = user.bio ?? ""
         self.link = user.link ?? ""
         self.isPrivate = user.isPrivate
-    }
-    
-    func updateUserData(with userId: String) async throws {
-        try await updateProfileImage(with: userId)
     }
     
     @MainActor
@@ -40,11 +39,23 @@ class EditProfileViewModel: ObservableObject {
         self.uiImage = uiImage
         self.profileImage = Image(uiImage: uiImage)
     }
-     
-    private func updateProfileImage(with userId: String) async throws {
-        guard let image = self.uiImage else { return }
-        guard let imageUrl = try await ImageUploader.uploadImage(image, userId: userId) else { return }
-        try await UserService.shared.updateUserProfileImage(withImageUrl: imageUrl)
+    
+    func updateUserData(with userId: String) async throws {
+        var dataToUpdate: [String: Any] = [
+            "username": username,
+            "bio": bio,
+            "link": link,
+            "isPrivate": isPrivate
+        ]
+        
+        // Update the profile image if it was changed
+        if let image = self.uiImage {
+            guard let imageUrl = try await ImageUploader.uploadImage(image, userId: userId) else { return }
+            dataToUpdate["profileImageUrl"] = imageUrl
+        }
+        
+        // Call the UserService to update the user's profile data
+        try await UserService.shared.updateUserProfile(with: dataToUpdate)
     }
     
 }
