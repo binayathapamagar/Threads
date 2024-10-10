@@ -49,8 +49,9 @@ struct CurrentUserProfileView: View {
             }//ScrollView
             .scrollIndicators(.hidden)
             .sheet(isPresented: $showEditProfileView, content: {
-                EditProfileView()
-                    .environmentObject(viewModel)
+                if let currentUser {
+                    EditProfileView(user: currentUser)
+                }
             })
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

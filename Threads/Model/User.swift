@@ -16,4 +16,5 @@ struct User: Identifiable, Codable, Hashable {
     var isPrivate: Bool = false
     var profileImageUrl: String?
     var bio: String?
+    var link: String?
 }

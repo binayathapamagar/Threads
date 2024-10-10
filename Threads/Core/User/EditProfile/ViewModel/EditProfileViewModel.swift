@@ -14,11 +14,22 @@ class EditProfileViewModel: ObservableObject {
             Task { await loadPhotosImage() }
         }
     }
+    @Published var username: String = ""
+    @Published var bio: String = ""
+    @Published var link: String = ""
+    @Published var isPrivate: Bool = false
     @Published var profileImage: Image?
     private var uiImage: UIImage?
     
-    func updateUserData() async throws {
-        try await updateProfileImage()
+    func loadUserData(user: User) {
+        self.username = user.username
+        self.bio = user.bio ?? ""
+        self.link = user.link ?? ""
+        self.isPrivate = user.isPrivate
+    }
+    
+    func updateUserData(with userId: String) async throws {
+        try await updateProfileImage(with: userId)
     }
     
     @MainActor
@@ -30,9 +41,9 @@ class EditProfileViewModel: ObservableObject {
         self.profileImage = Image(uiImage: uiImage)
     }
      
-    private func updateProfileImage() async throws {
+    private func updateProfileImage(with userId: String) async throws {
         guard let image = self.uiImage else { return }
-        guard let imageUrl = try await ImageUploader.uploadImage(image) else { return }
+        guard let imageUrl = try await ImageUploader.uploadImage(image, userId: userId) else { return }
         try await UserService.shared.updateUserProfileImage(withImageUrl: imageUrl)
     }
     
