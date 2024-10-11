@@ -20,6 +20,18 @@ struct Thread: Identifiable, Codable {
     var reposts: Int
     var shares: Int
     
+    //The user is an optional for performance purposes. To
+    //load the thread data without initializing the user.
+    //This will allow us to fetch the threads, update the UI,
+    
+    //Then fetch the users asynchronously and update the UI.
+    
+    //If the user was not optional, this will be a
+    //synchronous process where we fetch the threads,
+    //fetch the users and then update the UI.
+    
+    //The process will be longer, we wouldn't be able to use
+    //the Codable protocol
     var user: User?
     var imageUrl: String?
     

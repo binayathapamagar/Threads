@@ -53,7 +53,7 @@ struct ActivityView: View {
                     LazyVStack {
                         ForEach(0...10, id: \.self) { user in
                             VStack {
-                                ThreadCellView()
+                                ThreadCellView(thread: DeveloperPreview.shared.thread)
                                     .padding(.horizontal)
                                 
                             }//VStack

@@ -53,7 +53,7 @@ struct UserContentListView: View {
             //Content List
             LazyVStack {
                 ForEach(0...10, id: \.self) { thread in
-                    ThreadCellView()
+                    ThreadCellView(thread: DeveloperPreview.shared.thread)
                 }//ForEach
             }//LazyVStack
             .padding(.horizontal)
