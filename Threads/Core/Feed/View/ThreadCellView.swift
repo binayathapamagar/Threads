@@ -23,7 +23,7 @@ struct ThreadCellView: View {
                             .font(.footnote)
                         .fontWeight(.semibold)
 
-                        Text(thread.timestamp.dateValue().description)
+                        Text(thread.timestamp.timeAgoDisplay())
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray2))
                         
@@ -41,18 +41,30 @@ struct ThreadCellView: View {
                         .multilineTextAlignment(.leading)
                     
                     //Action buttons
-                    HStack(spacing: 16) {
+                    HStack(alignment: .bottom, spacing: 24) {
                         Button(action: {}, label: {
                             Image(systemName: "heart")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 18, height: 18)
                         })
                         Button(action: {}, label: {
                             Image(systemName: "bubble.right")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 18, height: 18)
                         })
                         Button(action: {}, label: {
                             Image(systemName: "arrow.rectanglepath")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 20, height: 20)
                         })
                         Button(action: {}, label: {
                             Image(systemName: "paperplane")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 18, height: 18)
                         })
                     }//HStack
                     .foregroundStyle(.secondary)

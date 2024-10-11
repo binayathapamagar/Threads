@@ -18,35 +18,65 @@ struct CreateThreadView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                HStack(alignment: .top) {
-                    CircularProfileImageView(user: user, size: .small)
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(user?.username ?? "Username")
-                            .fontWeight(.semibold)
+            ZStack {
+                VStack {
+                    HStack(alignment: .top, spacing: 12) {
+                        CircularProfileImageView(user: user, size: .small)
+
+                        VStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(user?.username ?? "username")
+                                    .fontWeight(.semibold)
+                                
+                                TextField("What's new?", text: $content, axis: .vertical)
+                            }//VStack
+                            .font(.subheadline)
+                            
+                            HStack(alignment: .bottom, spacing: 16) {
+                                Button {
+                                } label: {
+                                    Image(systemName: "photo")
+                                        .foregroundStyle(.icon)
+                                }//Button
+                                
+                                Button {
+                                } label: {
+                                    Image(systemName: "camera")
+                                        .foregroundStyle(.icon)
+                                }//Button
+                                
+                                Spacer()
+                            }
+                            
+                        }//VStack
                         
-                        TextField("Create a thread...", text: $content, axis: .vertical)
-                    }//VStack
-                    .font(.footnote)
+                        Spacer()
+                        
+                        if !content.isEmpty {
+                            Button {
+                                content = ""
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .foregroundStyle(.gray)
+                            }//Button
+                        }
+                    }//HStack
                     
                     Spacer()
-                    
-                    if !content.isEmpty {
-                        Button {
-                            content = ""
-                        } label: {
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .frame(width: 12, height: 12)
-                                .foregroundStyle(.gray)
-                        }//Button
-                    }
-                }//HStack
+                }//VStack
+                .padding()
                 
-                Spacer()
-            }//VStack
-            .padding()
+                if viewModel.showLoadingSpinner {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    VStack {
+                        AuthProgressView()
+                    }//VStack
+                }
+            }//ZStack
             .navigationTitle("New Thread")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

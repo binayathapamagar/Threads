@@ -19,6 +19,8 @@ class EditProfileViewModel: ObservableObject {
     @Published var link: String = ""
     @Published var isPrivate: Bool = false
     @Published var profileImage: Image?
+    @Published var showLoadingSpinner = false
+
     private var uiImage: UIImage?
     
     // Error messages
@@ -40,13 +42,23 @@ class EditProfileViewModel: ObservableObject {
         self.profileImage = Image(uiImage: uiImage)
     }
     
+    @MainActor
     func updateUserData(with userId: String) async throws {
+        showLoadingSpinner = true
+
+        defer {
+            showLoadingSpinner = false
+        }
+        
         var dataToUpdate: [String: Any] = [
-            "username": username,
             "bio": bio,
             "link": link,
             "isPrivate": isPrivate
         ]
+        
+        if !username.isEmpty {
+            dataToUpdate["username"] = username
+        }
         
         // Update the profile image if it was changed
         if let image = self.uiImage {

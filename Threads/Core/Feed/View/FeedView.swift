@@ -9,19 +9,43 @@ import SwiftUI
 
 struct FeedView: View {
     @StateObject private var viewModel = FeedViewModel()
+    @Binding var showCreateThread: Bool
+    private var user: User? {
+        UserService.shared.currentUser
+    }
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVStack(content: {
-                    ForEach(viewModel.threads) { thread in
-                        ThreadCellView(thread: thread)
-                            .padding(.horizontal)
-                    }//ForEach
-                })//LazyVStack
-            }//ScrollView
+            ZStack {
+                ScrollView {
+                    NewThreadView(user: user)
+                        .padding(.top)
+                        .padding(.horizontal)
+                        .onTapGesture {
+                            showCreateThread = true
+                        }
+                    
+                    Divider()
+                        .padding(.top)
+                    
+                    LazyVStack(content: {
+                        ForEach(viewModel.threads) { thread in
+                            ThreadCellView(thread: thread)
+                                .padding(.horizontal)
+                        }//ForEach
+                    })//LazyVStack
+                }//ScrollView
+                if viewModel.showLoadingSpinner {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    VStack {
+                        AuthProgressView()
+                    }//VStack
+                }
+            }//ZStack
             .refreshable {
-                print("Pull to refresh")
+                Task { try await viewModel.fetchThreads() }
             }//refreshable
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -48,5 +72,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    FeedView()
+    FeedView(showCreateThread: .constant(false))
 }

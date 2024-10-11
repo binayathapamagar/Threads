@@ -9,8 +9,16 @@ import FirebaseAuth
 import FirebaseCore
 
 class CreateThreadViewModel: ObservableObject {
+    @Published var showLoadingSpinner = false
+
     func uploadThread(with content: String) async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        showLoadingSpinner = true
+
+        defer {
+            showLoadingSpinner = false
+        }
         
         let thread = Thread(
             ownerUid: uid,

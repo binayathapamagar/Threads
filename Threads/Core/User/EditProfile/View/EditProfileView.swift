@@ -96,6 +96,15 @@ struct EditProfileView: View {
                 )
                 .padding()
                 
+                if viewModel.showLoadingSpinner {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    VStack {
+                        AuthProgressView()
+                    }//VStack
+                }
+                
             }//ZStack
             .navigationTitle("Edit Profile")
             .navigationBarTitleDisplayMode(.inline)

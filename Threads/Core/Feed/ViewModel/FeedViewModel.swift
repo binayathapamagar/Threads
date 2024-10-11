@@ -10,13 +10,18 @@ import Foundation
 @MainActor
 class FeedViewModel: ObservableObject {
     @Published var threads = [Thread]()
+    @Published var showLoadingSpinner = false
     
     init() {
         Task { try await fetchThreads() }
     }
     
     func fetchThreads() async throws {
+        showLoadingSpinner = true
+        
         self.threads = try await ThreadService.fetchThreads()
+        showLoadingSpinner = false
+        
         try await fetchUserForThread()
     }
     

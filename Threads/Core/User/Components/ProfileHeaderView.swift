@@ -4,7 +4,6 @@
 //
 //  Created by BINAYA THAPA MAGAR on 2024-10-07.
 //
-
 import SwiftUI
 
 struct ProfileHeaderView: View {
@@ -25,12 +24,12 @@ struct ProfileHeaderView: View {
                 }
                 
                 //Bio, link and followers count
-                if let bio = user?.bio{
+                if let bio = user?.bio, !bio.isEmpty {
                     Text(bio)
                         .font(.footnote)
                 }
                 
-                if let link = user?.link {
+                if let link = user?.link, !link.isEmpty {
                     Text(link)
                         .foregroundStyle(Color.link)
                         .font(.footnote)

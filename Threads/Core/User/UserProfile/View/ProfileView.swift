@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     var user: User
     @State private var selectedFilter: ProfileThreadFilter = .threads
     @Namespace var animation
