@@ -43,7 +43,9 @@ struct CurrentUserProfileView: View {
                             .padding(.horizontal)
                     })
                     
-                    UserContentListView()
+                    if let currentUser {
+                        UserContentListView(user: currentUser)
+                    }
                 }//VStack
                 .padding(.top, 16)
             }//ScrollView

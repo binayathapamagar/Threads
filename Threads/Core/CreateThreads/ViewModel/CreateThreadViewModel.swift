@@ -11,6 +11,7 @@ import FirebaseCore
 class CreateThreadViewModel: ObservableObject {
     @Published var showLoadingSpinner = false
 
+    @MainActor
     func uploadThread(with content: String) async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         

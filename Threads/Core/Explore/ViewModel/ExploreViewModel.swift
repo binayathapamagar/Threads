@@ -30,7 +30,7 @@ class ExploreViewModel: ObservableObject {
     }
     
     @MainActor
-    private func fetchUsers() async throws {
+    func fetchUsers() async throws {
         showLoadingSpinner = true
         
         defer {

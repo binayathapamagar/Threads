@@ -9,7 +9,7 @@ import Firebase
 
 extension Timestamp {
     
-    /// Converts the Firebase `Timestamp` to a relative time string (e.g., "5m", "1d").
+    // Converts the Firebase `Timestamp` to a relative time string (e.g., "5m", "1d").
     func timeAgoDisplay() -> String {
         let date = self.dateValue()
         let secondsAgo = Int(Date().timeIntervalSince(date))
@@ -38,4 +38,13 @@ extension Timestamp {
             return "\(secondsAgo / year)y"
         }
     }
+    
+//    func timeAgoDisplay() -> String {
+//        let formatter = DateComponentsFormatter()
+//        formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth, .month, .year]
+//        formatter.maximumUnitCount = 1
+//        formatter.unitsStyle = .abbreviated
+//        return formatter.string(from: self.dateValue(), to: Date()) ?? ""
+//    }
+    
 }

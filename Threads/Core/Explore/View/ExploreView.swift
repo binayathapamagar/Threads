@@ -43,6 +43,9 @@ struct ExploreView: View {
                     }//VStack
                 }
             }//ZStack
+            .refreshable {
+                Task { try await viewModel.fetchUsers() }
+            }//refreshable
             .navigationTitle("Search")
         }//NavigationStack
     }

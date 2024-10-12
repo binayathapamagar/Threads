@@ -32,7 +32,7 @@ struct ProfileView: View {
                         .padding(.horizontal)
                 })
                 
-                UserContentListView()
+                UserContentListView(user: user)
             }//VStack
             .padding(.top, 16)
         }//ScrollView
