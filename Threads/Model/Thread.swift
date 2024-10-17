@@ -9,7 +9,8 @@ import Firebase
 import FirebaseFirestore
 
 struct Thread: Identifiable, Codable {
-    //Using the document id as the threadId and it has to be an optional when we use the property wrapper
+    //Using the document id as the threadId and it has to be an
+    //optional when we use the property wrapper
     @DocumentID var threadId: String?
     let ownerUid: String
     let content: String
@@ -19,6 +20,11 @@ struct Thread: Identifiable, Codable {
     var comments: Int
     var reposts: Int
     var shares: Int
+    
+    //This property is only for the client-side and will not be
+    //persisted in the database. It will be unique to the individual
+    //users that consumes a particular thread.
+    var didLike: Bool? = false
     
     //The user is an optional for performance purposes. To
     //load the thread data without initializing the user.
