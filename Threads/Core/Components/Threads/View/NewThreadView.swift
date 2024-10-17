@@ -26,10 +26,13 @@ struct NewThreadView: View {
                 }//VStack
                 .font(.subheadline)
                 
-                HStack(alignment: .bottom, spacing: 16) {
+                HStack(alignment: .bottom, spacing: 24) {
                     Button {
                     } label: {
                         Image(systemName: "photo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
                             .foregroundStyle(.icon)
                     }//Button
                     .disabled(true)
@@ -37,6 +40,9 @@ struct NewThreadView: View {
                     Button {
                     } label: {
                         Image(systemName: "camera")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
                             .foregroundStyle(.icon)
                     }//Button
                     .disabled(true)

@@ -9,9 +9,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class UserService {
-    
-    private var USERS_COLLECTION_NAME = "users"
-    
+        
     //No the firebase user and our own custom user model that will be
     //used to populate our app
     @Published var currentUser: User?
@@ -27,7 +25,9 @@ class UserService {
     @MainActor
     func fetchCurrentUser() async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let snapshot = try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(uid).getDocument()
+        let snapshot = try await FirestoreConstants
+            .UserCollection.document(uid)
+            .getDocument()
         let user = try snapshot.data(as: User.self)
         self.currentUser = user
         
@@ -36,13 +36,18 @@ class UserService {
     
     static func fetchUsers() async throws -> [User] {
         guard let currentUserUid = Auth.auth().currentUser?.uid else { return [] }
-        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
+        let snapshot = try await FirestoreConstants
+            .UserCollection
+            .getDocuments()
         let users = snapshot.documents.compactMap({ try? $0.data(as: User.self) })
         return users.filter({ $0.id != currentUserUid })
     }
     
     static func fetchUser(with uid: String) async throws -> User {
-        let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+        let snapshot = try await FirestoreConstants
+            .UserCollection
+            .document(uid)
+            .getDocument()
         return try snapshot.data(as: User.self)
     }
     
@@ -54,7 +59,10 @@ class UserService {
     func updateUserProfile(with data: [String: Any]) async throws {
         guard let currentUserUid = Auth.auth().currentUser?.uid else { return }
         
-        try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(currentUserUid).updateData(data)
+        try await FirestoreConstants
+            .UserCollection
+            .document(currentUserUid)
+            .updateData(data)
         
         if let updatedUser = try await fetchUpdatedUser(with: currentUserUid) {
             self.currentUser = updatedUser
@@ -62,9 +70,10 @@ class UserService {
     }
 
     private func fetchUpdatedUser(with userId: String) async throws -> User? {
-        let snapshot = try await Firestore.firestore().collection(USERS_COLLECTION_NAME).document(userId).getDocument()
+        let snapshot = try await FirestoreConstants
+            .UserCollection
+            .document(userId)
+            .getDocument()
         return try snapshot.data(as: User.self)
     }
-
-    
 }

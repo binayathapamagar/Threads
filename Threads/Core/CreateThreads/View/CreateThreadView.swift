@@ -22,7 +22,7 @@ struct CreateThreadView: View {
                 VStack {
                     HStack(alignment: .top, spacing: 12) {
                         CircularProfileImageView(user: user, size: .small)
-
+                        
                         VStack(spacing: 12) {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(user?.username ?? "username")
@@ -32,18 +32,23 @@ struct CreateThreadView: View {
                             }//VStack
                             .font(.subheadline)
                             
-                            HStack(alignment: .bottom, spacing: 16) {
+                            HStack(alignment: .bottom, spacing: 24) {
                                 Button {
                                 } label: {
                                     Image(systemName: "photo")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20, height: 20)
                                         .foregroundStyle(.icon)
                                 }//Button
                                 
                                 Button {
                                 } label: {
                                     Image(systemName: "camera")
-                                        .foregroundStyle(.icon)
-                                }//Button
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20, height: 20)
+                                    .foregroundStyle(.icon)                                }//Button
                                 
                                 Spacer()
                             }

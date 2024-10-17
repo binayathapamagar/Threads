@@ -21,8 +21,8 @@ struct ThreadCellView: View {
                         //Username
                         Text(thread.user?.username ?? "@username")
                             .font(.footnote)
-                        .fontWeight(.semibold)
-
+                            .fontWeight(.semibold)
+                        
                         Text(thread.timestamp.timeAgoDisplay())
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray2))
@@ -41,37 +41,11 @@ struct ThreadCellView: View {
                         .multilineTextAlignment(.leading)
                     
                     //Action buttons
-                    HStack(alignment: .bottom, spacing: 24) {
-                        Button(action: {}, label: {
-                            Image(systemName: "heart")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 18, height: 18)
-                        })
-                        Button(action: {}, label: {
-                            Image(systemName: "bubble.right")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 18, height: 18)
-                        })
-                        Button(action: {}, label: {
-                            Image(systemName: "arrow.rectanglepath")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20)
-                        })
-                        Button(action: {}, label: {
-                            Image(systemName: "paperplane")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 18, height: 18)
-                        })
-                    }//HStack
-                    .foregroundStyle(.secondary)
-                    .padding(.vertical, 8)
+                    ContentActionButtonsView(thread: thread)
+                        .padding(.vertical, 8)
                     
                 }//VStack
-
+                
             }//HStack
             
             Divider()

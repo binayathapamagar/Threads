@@ -24,7 +24,6 @@ struct FeedView: View {
                         .onTapGesture {
                             showCreateThread = true
                         }
-                    
                     Divider()
                         .padding(.top)
                     
