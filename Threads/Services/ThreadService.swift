@@ -87,7 +87,7 @@ extension ThreadService {
     
     static func userHasLikedThread(_ thread: Thread) async throws -> Bool {
         guard let uid = Auth.auth().currentUser?.uid else { return false }
-
+        
         let snapshot = try await FirestoreConstants
             .UserCollection
             .document(uid)
@@ -96,5 +96,55 @@ extension ThreadService {
             .getDocument()
         
         return snapshot.exists
+    }
+    
+    static func fetchUserLikedThreads(with uid: String) async throws -> [Thread] {
+        // Step 1: Fetch all the thread IDs from the user-likes collection
+        let snapshot = try await FirestoreConstants
+            .UserCollection
+            .document(uid)
+            .collection(FirestoreConstants.UserLikesCollectionName)
+            .getDocuments()
+        
+        // Step 2: Extract thread IDs from the snapshot
+        let threadIds = snapshot.documents.map { $0.documentID }
+        
+        // If there are no liked threads, return an empty array
+        guard !threadIds.isEmpty else { return [] }
+        
+        // Step 3: Fetch all the liked threads from the Threads collection
+        var threads = [Thread]()
+        
+        // Parallel fetching for threads
+        try await withThrowingTaskGroup(of: (Thread, User?).self) { group in
+            for threadId in threadIds {
+                group.addTask {
+                    // Fetch the thread by ID
+                    let threadDoc = try await FirestoreConstants
+                        .ThreadCollection
+                        .document(threadId)
+                        .getDocument()
+                    
+                    // Decode the thread
+                    let thread = try threadDoc.data(as: Thread.self)
+                    
+                    // Fetch the user (thread owner) for each thread
+                    let threadOwner = try await UserService.fetchUser(with: thread.ownerUid)
+                    
+                    // Return both thread and user
+                    return (thread, threadOwner)
+                }
+            }
+            
+            // Step 4: Collect the results
+            for try await (thread, threadOwner) in group {
+                var updatedThread = thread
+                updatedThread.user = threadOwner // Assign the fetched user to the thread
+                threads.append(updatedThread)
+            }
+        }
+        
+        // Step 5: Sort threads by timestamp (optional)
+        return threads.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
     }
 }

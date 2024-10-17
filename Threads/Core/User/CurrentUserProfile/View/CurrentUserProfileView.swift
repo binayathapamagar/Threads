@@ -42,7 +42,6 @@ struct CurrentUserProfileView: View {
                             }
                             .padding(.horizontal)
                     })
-                    
                     if let currentUser {
                         UserContentListView(user: currentUser)
                     }

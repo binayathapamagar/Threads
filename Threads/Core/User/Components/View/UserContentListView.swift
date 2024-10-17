@@ -9,7 +9,6 @@ import SwiftUI
 
 struct UserContentListView: View {
     @StateObject var viewModel: UserContentListViewModel
-    @State private var selectedFilter: ProfileThreadFilter = .threads
     @Namespace var animation
     
     init(user: User) {
@@ -20,7 +19,6 @@ struct UserContentListView: View {
     
     var body: some View {
         VStack {
-            
             //Profile Thread Filter
             ZStack(alignment: .bottom) {
                 Rectangle()
@@ -33,10 +31,10 @@ struct UserContentListView: View {
                             Text(filter.title)
                                 .font(.subheadline)
                                 .fontWeight(
-                                    selectedFilter == filter ? .semibold : .regular
+                                    viewModel.selectedFilter == filter ? .semibold : .regular
                                 )
                             
-                            if selectedFilter == filter {
+                            if viewModel.selectedFilter == filter {
                                 Rectangle()
                                     .foregroundStyle(.appPrimary)
                                     .frame(maxWidth: .infinity, maxHeight: 1)
@@ -49,7 +47,7 @@ struct UserContentListView: View {
                         }//VStack
                         .onTapGesture {
                             withAnimation(.smooth) {
-                                selectedFilter = filter
+                                viewModel.updateFilter(with: filter)
                             }
                         }
                     }//ForEach
@@ -58,12 +56,23 @@ struct UserContentListView: View {
             }//ZStack
             
             //Content List
-            LazyVStack {
-                ForEach(viewModel.threads) { thread in
-                    ThreadCellView(thread: thread)
-                }//ForEach
-            }//LazyVStack
-            .padding(.horizontal)
+            if viewModel.threads.isEmpty {
+                Spacer()
+                Text(viewModel.emptyMessage)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.icon)
+                    .padding()
+                Spacer()
+            } else {
+                LazyVStack {
+                    ForEach(viewModel.threads) { thread in
+                        ThreadCellView(thread: thread)
+                    }//ForEach
+                }//LazyVStack
+                .padding(.horizontal)
+            }
         }//VStack
     }
 }
