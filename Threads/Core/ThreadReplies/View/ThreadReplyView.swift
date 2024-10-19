@@ -9,10 +9,7 @@ import SwiftUI
 
 struct ThreadReplyView: View {
     @StateObject private var viewModel = ThreadReplyViewModel()
-    
     @State var reply: String = ""
-    @State var threadViewHeight: CGFloat = 24 //Default value to fall back on
-    
     @Environment(\.dismiss) var dismiss
     
     let thread: Thread
@@ -23,28 +20,6 @@ struct ThreadReplyView: View {
     
     private var currentUser: User? {
         UserService.shared.currentUser
-    }
-    
-    func setThreadViewHeight() {
-        guard let screenWidth = UIScreen.current?.bounds.size.width else { return }
-        let imageDimension: CGFloat = ProfileImageSize.small.dimension
-        let padding: CGFloat = 16
-        let spacing: CGFloat = 8
-        let replyTextFieldWidth = screenWidth - imageDimension - padding - spacing
-        
-        let font = UIFont.systemFont(ofSize: 15)
-        
-        let threadContentHeight = thread.content.heightWithConstraintWidth(replyTextFieldWidth, font: font)
-        
-        print(#function, "DEBUG: Height of the thread content: \(threadContentHeight)")
-        
-        let rootVStackSpacing: CGFloat = 8
-        let threadUsernameThreadContentSpacing: CGFloat = 4
-        
-        //Adding the image's height & the thread's content height
-        threadViewHeight = threadContentHeight + imageDimension - padding - spacing - rootVStackSpacing - threadUsernameThreadContentSpacing
-        
-        print(#function, "DEBUG: Height of the thread view: \(threadViewHeight)")
     }
     
     var body: some View {
@@ -59,7 +34,7 @@ struct ThreadReplyView: View {
                             CircularProfileImageView(user: threadUser, size: .small)
                             
                             Rectangle()
-                                .frame(width: 2, height: threadViewHeight)
+                                .frame(width: 2, height: viewModel.threadViewHeight)
                                 .foregroundStyle(Color(.systemGray4))
                         }//VStack
                         
@@ -107,7 +82,7 @@ struct ThreadReplyView: View {
                 Spacer()
             }//VStack
             .onAppear {
-                setThreadViewHeight()
+                viewModel.setThreadViewHeight(with: thread)
             }
             .navigationTitle("Reply")
             .navigationBarTitleDisplayMode(.inline )
