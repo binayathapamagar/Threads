@@ -54,8 +54,6 @@ struct ActivityView: View {
                         ForEach(0...10, id: \.self) { user in
                             VStack {
                                 ThreadCellView(thread: DeveloperPreview.shared.thread)
-                                    .padding(.horizontal)
-                                
                             }//VStack
                             .padding(.vertical, 4)
                         }//ForEach

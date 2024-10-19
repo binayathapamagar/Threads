@@ -28,11 +28,18 @@ class DeveloperPreview {
     
     let thread = Thread(
         ownerUid: NSUUID().uuidString,
-        content: "Test Thread",
+        content: "This is a test thread for the test user to use for development purposes.",
         timestamp: Timestamp(),
         likes: 0,
         comments: 0,
         reposts: 0,
-        shares: 0
+        shares: 0,
+        user: User(
+            id: UUID().uuidString,
+            username: "leo_messi",
+            fullName: "Leo Andres Messi",
+            email: "messi@gmail.com",
+            joinedDate: "July 23, 2024"
+        )
     )
 }

@@ -25,7 +25,7 @@ struct UserCellView: View {
                     .fontWeight(.medium)
                     .padding(.vertical, 4)
             }//VStack
-            .font(.footnote)
+            .font(.subheadline)
             .padding(.leading, 8)
             
             Spacer()

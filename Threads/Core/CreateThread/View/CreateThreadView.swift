@@ -29,6 +29,7 @@ struct CreateThreadView: View {
                                     .fontWeight(.semibold)
                                 
                                 TextField("What's new?", text: $content, axis: .vertical)
+                                    .multilineTextAlignment(.leading)
                             }//VStack
                             .font(.subheadline)
                             

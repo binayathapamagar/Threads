@@ -20,11 +20,11 @@ struct ThreadCellView: View {
                         
                         //Username
                         Text(thread.user?.username ?? "@username")
-                            .font(.footnote)
+                            .font(.subheadline)
                             .fontWeight(.semibold)
                         
                         Text(thread.timestamp.timeAgoDisplay())
-                            .font(.caption)
+                            .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                         
                         Spacer()
@@ -37,7 +37,7 @@ struct ThreadCellView: View {
                     
                     //Thread content
                     Text(thread.content)
-                        .font(.footnote)
+                        .font(.subheadline)
                         .multilineTextAlignment(.leading)
                     
                     //Action buttons
@@ -47,6 +47,7 @@ struct ThreadCellView: View {
                 }//VStack
                 
             }//HStack
+            .padding(.horizontal)
             
             Divider()
         }//VStack

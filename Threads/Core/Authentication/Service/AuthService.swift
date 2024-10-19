@@ -10,20 +10,20 @@ import FirebaseFirestore
 
 class AuthService {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     private let USERS_COLLECTION_NAME = "users"
     @Published var userSession: FirebaseAuth.User?
     
     static let shared = AuthService()
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     init() {
         self.userSession = Auth.auth().currentUser //Will be nil if the user is not logged in.
     }
     
-    // MARK: FireAuth methods
+    // MARK: - FireAuth methods
     
     @MainActor
     func login(withEmail email: String, password: String) async throws {
@@ -63,7 +63,7 @@ class AuthService {
         UserService.shared.resetCurrentUser()//Sets the current user to nil
     }
     
-    // MARK: Firestore collection methods
+    // MARK: - Firestore collection methods
     
     @MainActor
     private func uploadUserData(

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentActionButtonsView: View {
     @ObservedObject private var viewModel: ContentActionButtonsViewModel
+    @State private var showReplySheet: Bool = false
     
     init(thread: Thread) {
         self.viewModel = ContentActionButtonsViewModel(thread: thread)
@@ -43,7 +44,9 @@ struct ContentActionButtonsView: View {
                     }
                 }
             }
-            Button(action: {}, label: {
+            Button(action: {
+                showReplySheet.toggle()
+            }, label: {
                 Image(systemName: "bubble.right")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -65,6 +68,9 @@ struct ContentActionButtonsView: View {
                     .foregroundStyle(.secondary)
             })
         }//HStack
+        .sheet(isPresented: $showReplySheet) {
+            ThreadReplyView(thread: thread)
+        }
     }
 }
 

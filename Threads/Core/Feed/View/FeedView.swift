@@ -30,7 +30,6 @@ struct FeedView: View {
                     LazyVStack(content: {
                         ForEach(viewModel.threads) { thread in
                             ThreadCellView(thread: thread)
-                                .padding(.horizontal)
                         }//ForEach
                     })//LazyVStack
                 }//ScrollView
