@@ -17,9 +17,9 @@ struct Thread: Identifiable, Codable {
     let timestamp: Timestamp//From Firebase
     
     var likes: Int
-    var comments: Int
     var reposts: Int
     var shares: Int
+    var replyCount: Int
     
     //This property is only for the client-side and will not be
     //persisted in the database. It will be unique to the individual

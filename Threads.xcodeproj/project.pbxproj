@@ -59,6 +59,8 @@
 		2AE3EC902CC38FAD004E10A6 /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE3EC8F2CC38FAD004E10A6 /* UIWindowExtension.swift */; };
 		2AE3EC922CC38FB9004E10A6 /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE3EC912CC38FB9004E10A6 /* UIScreenExtension.swift */; };
 		2AE74EEB2CC323A100E0C3A5 /* ThreadReplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE74EEA2CC3239A00E0C3A5 /* ThreadReplyViewModel.swift */; };
+		2AEFE8A62CC745AD00E3BC03 /* ThreadReply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEFE8A52CC745AD00E3BC03 /* ThreadReply.swift */; };
+		2AEFE8A92CC74D4700E3BC03 /* ThreadReplyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEFE8A82CC74D4700E3BC03 /* ThreadReplyService.swift */; };
 		2AFC0D452C94BB310089AF5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2AFC0D442C94BB310089AF5B /* GoogleService-Info.plist */; };
 		2AFC0D482C94BBFE0089AF5B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2AFC0D472C94BBFE0089AF5B /* FirebaseAuth */; };
 		2AFC0D4A2C94BBFE0089AF5B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2AFC0D492C94BBFE0089AF5B /* FirebaseFirestore */; };
@@ -119,6 +121,8 @@
 		2AE3EC8F2CC38FAD004E10A6 /* UIWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
 		2AE3EC912CC38FB9004E10A6 /* UIScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
 		2AE74EEA2CC3239A00E0C3A5 /* ThreadReplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplyViewModel.swift; sourceTree = "<group>"; };
+		2AEFE8A52CC745AD00E3BC03 /* ThreadReply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReply.swift; sourceTree = "<group>"; };
+		2AEFE8A82CC74D4700E3BC03 /* ThreadReplyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplyService.swift; sourceTree = "<group>"; };
 		2AFC0D442C94BB310089AF5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2AFC0D4F2C94C0790089AF5B /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -567,6 +571,8 @@
 		2AD84F922CC30FF300B617E8 /* ThreadReplies */ = {
 			isa = PBXGroup;
 			children = (
+				2AEFE8A42CC745A000E3BC03 /* Model */,
+				2AEFE8A72CC74D3800E3BC03 /* Service */,
 				2AD84F942CC3100C00B617E8 /* View */,
 				2AD84F952CC3101100B617E8 /* ViewModel */,
 			);
@@ -587,6 +593,22 @@
 				2AE74EEA2CC3239A00E0C3A5 /* ThreadReplyViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2AEFE8A42CC745A000E3BC03 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2AEFE8A52CC745AD00E3BC03 /* ThreadReply.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2AEFE8A72CC74D3800E3BC03 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2AEFE8A82CC74D4700E3BC03 /* ThreadReplyService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		2AFC0D4D2C94BF5A0089AF5B /* ViewModel */ = {
@@ -706,6 +728,7 @@
 				2A46287D2CB656570052D01E /* ImageUploader.swift in Sources */,
 				2AA04C9B2C9BC15500E972B2 /* AuthService.swift in Sources */,
 				2A7652952C9F8CA400ED98F3 /* ViewExtension.swift in Sources */,
+				2AEFE8A62CC745AD00E3BC03 /* ThreadReply.swift in Sources */,
 				2AB30FA72C8BCFBE00B94061 /* ExploreView.swift in Sources */,
 				2AA04C9D2C9BF01F00E972B2 /* LoginViewModel.swift in Sources */,
 				2AE3EC8A2CC38AB5004E10A6 /* StringExtension.swift in Sources */,
@@ -734,6 +757,7 @@
 				2A1860F22CC09A740094F742 /* ContentActionButtonsView.swift in Sources */,
 				2A8B32062C8D35140042730D /* UserCellView.swift in Sources */,
 				2AB30FA02C8BCA5D00B94061 /* TabBarView.swift in Sources */,
+				2AEFE8A92CC74D4700E3BC03 /* ThreadReplyService.swift in Sources */,
 				2AD0E9EF2C9E442F00AD7622 /* User.swift in Sources */,
 				2A1860F62CC09C820094F742 /* ContentActionButtonsViewModel.swift in Sources */,
 				2A0ECB0B2CB7A6FF00F79EB3 /* FeedViewModel.swift in Sources */,

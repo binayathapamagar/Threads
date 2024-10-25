@@ -13,7 +13,7 @@ struct ThreadReplyView: View {
     @Environment(\.dismiss) var dismiss
     
     let thread: Thread
-    
+     
     private var threadUser: User? {
         thread.user
     }
@@ -24,63 +24,73 @@ struct ThreadReplyView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Divider()
-                 
-                //Thread
-                VStack(alignment: .leading, spacing: 4){
-                    HStack(alignment: .top) {
-                        VStack {
-                            CircularProfileImageView(user: threadUser, size: .small)
+            ZStack {
+                VStack {
+                    Divider()
+                     
+                    //Thread
+                    VStack(alignment: .leading, spacing: 4){
+                        HStack(alignment: .top) {
+                            VStack {
+                                CircularProfileImageView(user: threadUser, size: .small)
+                                
+                                Rectangle()
+                                    .frame(width: 2, height: viewModel.threadViewHeight)
+                                    .foregroundStyle(Color(.systemGray4))
+                            }//VStack
                             
-                            Rectangle()
-                                .frame(width: 2, height: viewModel.threadViewHeight)
-                                .foregroundStyle(Color(.systemGray4))
-                        }//VStack
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(threadUser?.username ?? "username")
-                                .fontWeight(.semibold)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(threadUser?.username ?? "username")
+                                    .fontWeight(.semibold)
+                                
+                                Text(thread.content)
+                                    .multilineTextAlignment(.leading)
+                            }//VStack
+                            .font(.subheadline)
                             
-                            Text(thread.content)
-                                .multilineTextAlignment(.leading)
-                        }//VStack
-                        .font(.subheadline)
+                            Spacer()
+                        }//HStack
                         
-                        Spacer()
-                    }//HStack
+                        //Reply
+                        HStack(alignment: .top) {
+                            CircularProfileImageView(user: currentUser, size: .small)
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(currentUser?.username ?? "username")
+                                    .fontWeight(.semibold)
+                                
+                                TextField("Reply to \(threadUser?.username ?? "")...", text: $reply, axis: .vertical)
+                                    .multilineTextAlignment(.leading)
+                            }//VStack
+                            .font(.subheadline)
+                            
+                            Spacer()
+                            
+                            if !reply.isEmpty {
+                                Button {
+                                    reply = ""
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                        .foregroundStyle(.gray)
+                                }//Button
+                            }
+                        }//HStack
+                    }//VStack
+                    .padding()
                     
-                    //Reply
-                    HStack(alignment: .top) {
-                        CircularProfileImageView(user: currentUser, size: .small)
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(currentUser?.username ?? "username")
-                                .fontWeight(.semibold)
-                            
-                            TextField("Reply to \(threadUser?.username ?? "")...", text: $reply, axis: .vertical)
-                                .multilineTextAlignment(.leading)
-                        }//VStack
-                        .font(.subheadline)
-                        
-                        Spacer()
-                        
-                        if !reply.isEmpty {
-                            Button {
-                                reply = ""
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .foregroundStyle(.gray)
-                            }//Button
-                        }
-                    }//HStack
+                    Spacer()
                 }//VStack
-                .padding()
-                
-                Spacer()
-            }//VStack
+                if viewModel.showLoadingSpinner {
+                    Color.black.opacity(0.4)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    VStack {
+                        AuthProgressView()
+                    }
+                }
+            }//ZStack
             .onAppear {
                 viewModel.setThreadViewHeight(with: thread)
             }
@@ -98,6 +108,7 @@ struct ThreadReplyView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Post") {
                         Task {
+                            try await viewModel.uploadThreadReply(replyText: reply, thread: thread)
                             dismiss()
                         }
                     }
