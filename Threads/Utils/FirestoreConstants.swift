@@ -14,6 +14,8 @@ struct FirestoreConstants {
     static let LikesFieldName = "likes"
     static let ThreadLikesCollectionName = "thread-likes"
     static let UserLikesCollectionName = "user-likes"
+    static let ThreadIdName = "threadId"
+    static let ThreadReplyOwnerUidName = "threadReplyOwnerUidName"
     
     static let UserCollection = Root.collection("users")
     
