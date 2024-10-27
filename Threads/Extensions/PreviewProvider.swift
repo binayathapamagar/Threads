@@ -26,7 +26,7 @@ class DeveloperPreview {
         joinedDate: "July 23, 2024"
     )
     
-    let thread = Thread(
+    lazy var thread = Thread(
         ownerUid: NSUUID().uuidString,
         content: "This is a test thread for the test user to use for development purposes.",
         timestamp: Timestamp(),
@@ -34,12 +34,6 @@ class DeveloperPreview {
         reposts: 1000,
         shares: 200,
         replyCount: 250,
-        user: User(
-            id: UUID().uuidString,
-            username: "leo_messi",
-            fullName: "Leo Andres Messi",
-            email: "messi@gmail.com",
-            joinedDate: "July 23, 2024"
-        )
+        user: user
     )
 }

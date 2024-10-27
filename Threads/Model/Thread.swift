@@ -8,7 +8,7 @@
 import Firebase
 import FirebaseFirestore
 
-struct Thread: Identifiable, Codable {
+struct Thread: Identifiable, Hashable, Codable {
     //Using the document id as the threadId and it has to be an
     //optional when we use the property wrapper
     @DocumentID var threadId: String?

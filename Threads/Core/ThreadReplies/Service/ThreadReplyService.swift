@@ -13,8 +13,6 @@ enum ReplyType {
     case user
 }
 
-
-
 struct ThreadReplyService {
     
     static func uploadThreadReply(_ threadReply: ThreadReply, to thread: Thread) async throws {
@@ -23,7 +21,7 @@ struct ThreadReplyService {
         async let _ = try await FirestoreConstants.RepliesCollection.document().setData(replyData)
         async let _ = try await FirestoreConstants.ThreadCollection.document(thread.id).updateData(
             [
-                "replyCount": thread.replyCount + 1
+                FirestoreConstants.ThreadReplyCountName: thread.replyCount + 1
             ]
         )
     }
