@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentActionButtonsView: View {
     @ObservedObject private var viewModel: ContentActionButtonsViewModel
+    @State private var showReplySheet: Bool = false
     
     init(thread: Thread) {
         self.viewModel = ContentActionButtonsViewModel(thread: thread)
@@ -43,28 +44,63 @@ struct ContentActionButtonsView: View {
                     }
                 }
             }
-            Button(action: {}, label: {
-                Image(systemName: "bubble.right")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 18, height: 18)
-                    .foregroundStyle(.secondary)
-            })
-            Button(action: {}, label: {
-                Image(systemName: "arrow.rectanglepath")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 20, height: 20)
-                    .foregroundStyle(.secondary)
-            })
-            Button(action: {}, label: {
-                Image(systemName: "paperplane")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 18, height: 18)
-                    .foregroundStyle(.secondary)
-            })
+            HStack(spacing: 4) {
+                Button(action: {
+                    showReplySheet.toggle()
+                }, label: {
+                    Image(systemName: "bubble.right")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(.secondary)
+                })
+                
+                if thread.replyCount > 0 {
+                    Button {} label: {
+                        Text("\(thread.replyCount)")
+                            .foregroundStyle(.secondary)
+                            .font(.system(size: 14))
+                    }
+                }
+            }
+            HStack(spacing: 4) {
+                Button(action: {}, label: {
+                    Image(systemName: "arrow.rectanglepath")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(.secondary)
+                })
+                
+                if thread.reposts > 0 {
+                    Button {} label: {
+                        Text("\(thread.reposts)")
+                            .foregroundStyle(.secondary)
+                            .font(.system(size: 14))
+                    }
+                }
+            }
+            HStack(spacing: 4) {
+                Button(action: {}, label: {
+                    Image(systemName: "paperplane")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 18, height: 18)
+                        .foregroundStyle(.secondary)
+                })
+                
+                if thread.shares > 0 {
+                    Button {} label: {
+                        Text("\(thread.shares)")
+                            .foregroundStyle(.secondary)
+                            .font(.system(size: 14))
+                    }
+                }
+            }
         }//HStack
+        .sheet(isPresented: $showReplySheet) {
+            ThreadReplyView(thread: thread)
+        }
     }
 }
 

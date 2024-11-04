@@ -1,29 +1,33 @@
 //
-//  ThreadCell.swift
+//  ThreadReplyCellView.swift
 //  Threads
 //
-//  Created by BINAYA THAPA MAGAR on 2024-09-07.
+//  Created by BINAYA THAPA MAGAR on 2024-11-02.
 //
 
 import SwiftUI
 
-struct ThreadCellView: View {
-    let thread: Thread
+struct ThreadReplyCellView: View {
+    let threadReply: ThreadReply
+    
+    private var replyUser: User? {
+        threadReply.replyUser
+    }
     
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
-                CircularProfileImageView(user: thread.user, size: .small)
+                CircularProfileImageView(user: replyUser, size: .small)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         
                         //Username
-                        Text(thread.user?.username ?? "@username")
+                        Text(replyUser?.username ?? "@username")
                             .font(.subheadline)
                             .fontWeight(.semibold)
                         
-                        Text(thread.timestamp.timeAgoDisplay())
+                        Text(threadReply.timestamp.timeAgoDisplay())
                             .font(.footnote)
                             .foregroundStyle(Color(.systemGray2))
                         
@@ -36,13 +40,16 @@ struct ThreadCellView: View {
                     }//HStack
                     
                     //Thread content
-                    Text(thread.content)
+                    Text(threadReply.replyText)
                         .font(.subheadline)
                         .multilineTextAlignment(.leading)
                     
+                    //Tightly coupled to a thread so will have to make this View accept a generic value that can be a thread or a reply.
                     //Action buttons
-                    ContentActionButtonsView(thread: thread)
-                        .padding(.vertical, 8)
+                    //                    if let thread = threadReply.thread {
+                    //                        ContentActionButtonsView(thread: thread)
+                    //                            .padding(.vertical, 8)
+                    //                    }
                     
                 }//VStack
                 
@@ -50,11 +57,11 @@ struct ThreadCellView: View {
             .padding(.horizontal)
             
             Divider()
+                .padding(.vertical)
         }//VStack
-        .padding(.top)
     }
 }
 
 #Preview {
-    ThreadCellView(thread: DeveloperPreview.shared.thread)
+    ThreadReplyCellView(threadReply: DeveloperPreview.shared.threadReply)
 }

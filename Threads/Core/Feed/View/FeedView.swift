@@ -29,11 +29,16 @@ struct FeedView: View {
                     
                     LazyVStack(content: {
                         ForEach(viewModel.threads) { thread in
-                            ThreadCellView(thread: thread)
-                                .padding(.horizontal)
+                            NavigationLink(value: thread) {
+                                ThreadCellView(thread: thread)
+                            }//NavigationLink
                         }//ForEach
                     })//LazyVStack
                 }//ScrollView
+                .navigationDestination(for: Thread.self) { thread in
+                    ThreadDetailsView(thread: thread)
+                }//NavigationDestination
+                
                 if viewModel.showLoadingSpinner {
                     Color.black.opacity(0.4)
                         .edgesIgnoringSafeArea(.all)

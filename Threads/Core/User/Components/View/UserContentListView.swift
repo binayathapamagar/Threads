@@ -71,7 +71,6 @@ struct UserContentListView: View {
                         ThreadCellView(thread: thread)
                     }//ForEach
                 }//LazyVStack
-                .padding(.horizontal)
             }
         }//VStack
     }

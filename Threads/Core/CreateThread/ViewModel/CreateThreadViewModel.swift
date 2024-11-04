@@ -13,10 +13,10 @@ class CreateThreadViewModel: ObservableObject {
 
     @MainActor
     func uploadThread(with content: String) async throws {
+        showLoadingSpinner = true
+        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        showLoadingSpinner = true
-
         defer {
             showLoadingSpinner = false
         }
@@ -26,9 +26,9 @@ class CreateThreadViewModel: ObservableObject {
             content: content,
             timestamp: Timestamp(),
             likes: 0,
-            comments: 0,
             reposts: 0,
-            shares: 0
+            shares: 0,
+            replyCount: 0
         )
         try await ThreadService.upload(thread)
     }

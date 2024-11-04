@@ -8,7 +8,7 @@
 import Firebase
 import FirebaseFirestore
 
-struct Thread: Identifiable, Codable {
+struct Thread: Identifiable, Hashable, Codable {
     //Using the document id as the threadId and it has to be an
     //optional when we use the property wrapper
     @DocumentID var threadId: String?
@@ -17,9 +17,9 @@ struct Thread: Identifiable, Codable {
     let timestamp: Timestamp//From Firebase
     
     var likes: Int
-    var comments: Int
     var reposts: Int
     var shares: Int
+    var replyCount: Int
     
     //This property is only for the client-side and will not be
     //persisted in the database. It will be unique to the individual
