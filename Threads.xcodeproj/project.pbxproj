@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A0700342CD6EB36009759DF /* ThreadReplyCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0700332CD6EB36009759DF /* ThreadReplyCellView.swift */; };
 		2A0ECAF32CB75D0600F79EB3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2A0ECAF22CB75D0600F79EB3 /* Kingfisher */; };
 		2A0ECAFA2CB774AB00F79EB3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0ECAF92CB774AB00F79EB3 /* ToastView.swift */; };
 		2A0ECAFC2CB77F7400F79EB3 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0ECAFB2CB77F7400F79EB3 /* Thread.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A0700332CD6EB36009759DF /* ThreadReplyCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadReplyCellView.swift; sourceTree = "<group>"; };
 		2A0ECAF92CB774AB00F79EB3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		2A0ECAFB2CB77F7400F79EB3 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		2A0ECAFE2CB7818F00F79EB3 /* CreateThreadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadViewModel.swift; sourceTree = "<group>"; };
@@ -587,6 +589,7 @@
 		2AD84F942CC3100C00B617E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2A0700332CD6EB36009759DF /* ThreadReplyCellView.swift */,
 				2AD84F962CC3102500B617E8 /* ThreadReplyView.swift */,
 			);
 			path = View;
@@ -757,6 +760,7 @@
 				2AD4C52E2C8D480A00B927BF /* ProfileThreadFilter.swift in Sources */,
 				2A46287D2CB656570052D01E /* ImageUploader.swift in Sources */,
 				2AA04C9B2C9BC15500E972B2 /* AuthService.swift in Sources */,
+				2A0700342CD6EB36009759DF /* ThreadReplyCellView.swift in Sources */,
 				2A7652952C9F8CA400ED98F3 /* ViewExtension.swift in Sources */,
 				2AEFE8A62CC745AD00E3BC03 /* ThreadReply.swift in Sources */,
 				2AB30FA72C8BCFBE00B94061 /* ExploreView.swift in Sources */,

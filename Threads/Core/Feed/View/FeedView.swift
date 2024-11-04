@@ -36,7 +36,7 @@ struct FeedView: View {
                     })//LazyVStack
                 }//ScrollView
                 .navigationDestination(for: Thread.self) { thread in
-                    Text(thread.content)
+                    ThreadDetailsView(thread: thread)
                 }//NavigationDestination
                 
                 if viewModel.showLoadingSpinner {

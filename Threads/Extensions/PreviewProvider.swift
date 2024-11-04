@@ -36,4 +36,14 @@ class DeveloperPreview {
         replyCount: 250,
         user: user
     )
+    
+    lazy var threadReply = ThreadReply(
+        threadId: NSUUID().uuidString,
+        replyText: "This is a test thread reply for the test user to use for development purposes.",
+        threadReplyOwnerUid: NSUUID().uuidString,
+        threadOwnerUid: NSUUID().uuidString,
+        timestamp: Timestamp(),
+        thread: thread,
+        replyUser: user
+    )
 }

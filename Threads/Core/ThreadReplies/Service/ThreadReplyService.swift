@@ -26,7 +26,7 @@ struct ThreadReplyService {
         )
     }
     
-    static func fetchReplies(for replyType: ReplyType, thread: Thread? = nil, user: User? = nil) async throws -> [ThreadReply] {
+    static func fetchReplies(for thread: Thread? = nil, for user: User? = nil, replyType: ReplyType) async throws -> [ThreadReply] {
         let id: String = {
             switch replyType {
             case .thread:

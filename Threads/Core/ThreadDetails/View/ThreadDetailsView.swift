@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct ThreadDetailsView: View {
-    @StateObject var viewModel = ThreadDetailsViewModel()
+    @StateObject var viewModel: ThreadDetailsViewModel
     
     let thread: Thread
+
+    init(thread: Thread) {
+        self.thread = thread
+        self._viewModel = StateObject(
+            wrappedValue: ThreadDetailsViewModel(thread: thread)
+        )
+    }
     
     var body: some View {
         ScrollView {
@@ -33,6 +40,7 @@ struct ThreadDetailsView: View {
                             .foregroundStyle(Color(.darkGray))
                     })
                 }//HStack
+                .padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 12) {
                     Text(thread.content)
@@ -41,14 +49,51 @@ struct ThreadDetailsView: View {
                     ContentActionButtonsView(thread: thread)
                 }//VStack
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
                 
                 Divider()
-                    .padding(.vertical)
+                    .padding(.top)
+                
+                HStack {
+                    Text("Replies")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                    
+                    Spacer()
+                    
+                    Button {
+                        print("Show user likes")
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("View activity")
+                            
+                            Image(systemName: "chevron.right")
+                        }//HStack
+                        .font(.subheadline)
+                        .foregroundStyle(.dividerBG)
+                    }//Button
+                }//HStack
+                .padding(.vertical, 8)
+                .padding(.horizontal)
+                
+                Divider()
+                    .padding(.bottom)
+                
+                LazyVStack{
+                    ForEach(viewModel.replies) { reply in
+                        ThreadReplyCellView(threadReply: reply)
+                    }
+                }//LazyVStack
             }//VStack
         }//ScrollView
+        .padding(.vertical)
+        .navigationTitle("Thread")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    ThreadDetailsView(thread: DeveloperPreview.shared.thread)
+    NavigationStack {
+        ThreadDetailsView(thread: DeveloperPreview.shared.thread)
+    }
 }
