@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 class ThreadDetailsViewModel: ObservableObject {
     @Published var replies = [ThreadReply]()
+    @Published var showLoadingSpinner = false
     
     private let thread: Thread
     
@@ -19,6 +20,12 @@ class ThreadDetailsViewModel: ObservableObject {
     }
     
     private func fetchThreadReplies() async throws {
+        showLoadingSpinner = true
+        
+        defer {
+            showLoadingSpinner = false
+        }
+        
         self.replies = try await ThreadReplyService.fetchReplies(for: thread, replyType: .thread)
         try await fetchUserDataForReplies()
     }
