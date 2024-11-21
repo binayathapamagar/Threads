@@ -10,6 +10,7 @@ import Foundation
 @MainActor
 class UserContentListViewModel: ObservableObject {
     @Published var threads = [Thread]()
+    @Published var replies = [ThreadReply]()
     @Published var emptyMessage: String = ""
     @Published var selectedFilter: ProfileThreadFilter = .threads
     
@@ -17,8 +18,38 @@ class UserContentListViewModel: ObservableObject {
     
     init(user: User) {
         self.user = user
+        
+        //Fetching the user's threads and replies concurrently instead of sequentially by using different tasks.
         Task { try await fetchUserThreads() }
+        Task { try await fetchUserReplies() }
     }
+    
+    func updateFilter(with newFilterValue: ProfileThreadFilter) {
+        threads = []
+        replies = []
+        
+        selectedFilter = newFilterValue
+        
+        Task {
+            switch selectedFilter {
+            case .threads:
+                try await fetchUserThreads()
+            case .replies:
+                try await fetchUserReplies()
+            case .reposts:
+                try await fetchUserReposts()
+            case .likes:
+                try await fetchUserLikes()
+
+            }
+        }
+    }
+    
+}
+
+// MARK: - Threads
+
+extension UserContentListViewModel {
     
     func fetchUserThreads() async throws {
         var threads = try await ThreadService.fetchUserThreads(with: user.id)
@@ -35,15 +66,44 @@ class UserContentListViewModel: ObservableObject {
             emptyMessage = ""
         }
     }
+        
+}
+
+// MARK: - Replies
+
+extension UserContentListViewModel {
     
     func fetchUserReplies() async throws {
-        threads = []
-        if threads.isEmpty {
+        self.replies = try await ThreadService.fetchThreadReplies(forUser: user)
+        
+        if replies.isEmpty {
             emptyMessage = selectedFilter.emptyMessage
+            return
         } else {
             emptyMessage = ""
         }
+        
+        try await fetchReplyThreadData()
     }
+    
+    func fetchReplyThreadData() async throws {
+        
+        for i in 0..<replies.count {
+            let reply = replies[i]
+            
+            var thread = try await ThreadService.fetchThread(threadId: reply.threadId)
+            thread.user = try await UserService.fetchUser(with: thread.ownerUid)
+            
+            replies[i].thread = thread
+        }
+        
+    }
+    
+}
+
+// MARK: - Reposts
+
+extension UserContentListViewModel {
     
     func fetchUserReposts() async throws {
         threads = []
@@ -54,30 +114,18 @@ class UserContentListViewModel: ObservableObject {
         }
     }
     
+}
+
+// MARK: - Likes
+
+extension UserContentListViewModel {
+    
     func fetchUserLikes() async throws {
         self.threads = try await ThreadService.fetchUserLikedThreads(with: user.id)
         if threads.isEmpty {
             emptyMessage = selectedFilter.emptyMessage
         } else {
             emptyMessage = ""
-        }
-    }
-    
-    func updateFilter(with newFilterValue: ProfileThreadFilter) {
-        selectedFilter = newFilterValue
-        
-        Task {
-            switch selectedFilter {
-            case .threads:
-                try await fetchUserThreads()
-            case .replies:
-                try await fetchUserReplies()
-            case .reposts:
-                try await fetchUserReposts()
-            case .likes:
-                try await fetchUserLikes()
-
-            }
         }
     }
     
