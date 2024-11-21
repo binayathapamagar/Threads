@@ -56,21 +56,42 @@ struct UserContentListView: View {
             }//ZStack
             
             //Content List
-            if viewModel.threads.isEmpty {
-                Spacer()
-                Text(viewModel.emptyMessage)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.icon)
-                    .padding()
-                Spacer()
+            if viewModel.selectedFilter == .replies {
+                if viewModel.replies.isEmpty {
+                    Spacer()
+                    Text(viewModel.emptyMessage)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.icon)
+                        .padding()
+                    Spacer()
+                } else {
+                    LazyVStack {
+                        ForEach(viewModel.replies) { reply in
+                            ThreadReplyProfileCellView(reply: reply)
+                                .transition(.move(edge: .trailing))
+                        }//ForEach
+                    }//LazyVStack
+                }
             } else {
-                LazyVStack {
-                    ForEach(viewModel.threads) { thread in
-                        ThreadCellView(thread: thread)
-                    }//ForEach
-                }//LazyVStack
+                if viewModel.threads.isEmpty {
+                    Spacer()
+                    Text(viewModel.emptyMessage)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.icon)
+                        .padding()
+                    Spacer()
+                } else {
+                    LazyVStack {
+                        ForEach(viewModel.threads) { thread in
+                            ThreadCellView(thread: thread)
+                                .transition(.move(edge: .leading))
+                        }//ForEach
+                    }//LazyVStack
+                }
             }
         }//VStack
     }
